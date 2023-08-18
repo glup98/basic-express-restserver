@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { router } from "../routes/user.routes.js";
+import { userRouter } from "../routes/user.routes.js";
+import { authRouter } from "../routes/auth.routes.js";
 import { dbConnection } from "../db/config.db.js";
 
 export default class Server {
@@ -8,6 +9,7 @@ export default class Server {
     this.app = express();
     this.port = process.env.PORT;
     this.userRoutesPath = "/api/users";
+    this.authPath = "/api/auth/";
     // Conectar a base de datos
     this.dbConnect();
     // Middlewares
@@ -23,16 +25,17 @@ export default class Server {
   }
 
   middlewares() {
+    //CORS
+    this.app.use(cors());
     //Directorio publico
     this.app.use(express.static("public"));
     // Parseo y lectura del body
     this.app.use(express.json());
-    //CORS
-    this.app.use(cors());
   }
 
   routes() {
-    this.app.use(this.userRoutesPath, router);
+    this.app.use(this.authPath, authRouter);
+    this.app.use(this.userRoutesPath, userRouter);
   }
 
   listen() {

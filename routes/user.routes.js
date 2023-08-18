@@ -13,10 +13,10 @@ import {
   userPut,
 } from "../controllers/user.controller.js";
 
-export const router = Router();
+export const userRouter = Router();
 
-router.get("/", userGet);
-router.put(
+userRouter.get("/", userGet);
+userRouter.put(
   "/:id",
   [
     check("id", "No es un ID valido").isMongoId(),
@@ -27,7 +27,7 @@ router.put(
   userPut
 );
 // router.put("/", userPut);
-router.post(
+userRouter.post(
   "/",
   [
     check("name", "El nombre es obligatoria").notEmpty(),
@@ -43,7 +43,7 @@ router.post(
   ],
   userPost
 );
-router.delete(
+userRouter.delete(
   "/:id",
   [
     check("id", "No es un ID valido").isMongoId(),
