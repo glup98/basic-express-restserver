@@ -17,7 +17,6 @@ export const isEmailDuplicated = async (email = "") => {
 
 export const existsUserId = async (id) => {
   const idExists = await User.findById(id);
-  console.log(idExists);
   if (!idExists) {
     throw new Error(`el id ${id} no existe`);
   }

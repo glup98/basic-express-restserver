@@ -50,8 +50,10 @@ export const userDelete = async (req, res = response) => {
     { state: false },
     { new: true }
   );
+  const userAuth = req.user;
   res.json({
     user,
+    userAuth,
   });
 };
 

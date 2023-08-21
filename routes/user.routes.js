@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { validateFields } from "../middlewares/validate-fields.js";
+
+import { validateFields, validateJWT, hasRole } from "../middlewares/index.js";
+
 import {
   existsUserId,
   isEmailDuplicated,
@@ -46,6 +48,9 @@ userRouter.post(
 userRouter.delete(
   "/:id",
   [
+    validateJWT,
+    // isAdminRole,
+    hasRole("ADMIN_ROLE", "VENTAS_ROLE"),
     check("id", "No es un ID valido").isMongoId(),
     check("id").custom(existsUserId),
     validateFields,
